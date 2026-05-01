@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors';
+// import cors from 'cors';
 import 'dotenv/config';
 import { createClient } from '@supabase/supabase-js';
 
@@ -13,7 +13,17 @@ const supabase = createClient(
     process.env.SUPABASE_ANON_KEY
 );
 
-app.use(cors());
+const cors = require('cors');
+
+const corsOptions = {
+    // Allow your specific frontend URL
+    origin: ['https://sastadost-frontend.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
 
 app.get('/api/search', async (req, res) => {
